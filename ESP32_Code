@@ -1,0 +1,53 @@
+
+#include <WiFi.h>
+#include <WebServer.h>
+
+const char* ssid = "MyoTrack";
+const char* password = "123123123";
+
+#define EMG_PIN 34
+
+WebServer server(80);
+
+void handleRoot() {
+  server.send(200, "text/plain",
+              "MyoTrack ESP32 EMG Monitoring System");
+}
+
+void handleData() {
+  int rawValue = analogRead(EMG_PIN);
+
+  float voltage = (rawValue / 4095.0) * 3.3;
+
+  String json = "{";
+  json += "\"raw\":" + String(rawValue) + ",";
+  json += "\"voltage\":" + String(voltage, 3);
+  json += "}";
+
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.send(200, "application/json", json);
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  analogReadResolution(12);
+  pinMode(EMG_PIN, INPUT);
+
+  WiFi.softAP(ssid, password);
+
+  Serial.println("MyoTrack WiFi Started");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.softAPIP());
+
+  server.on("/", handleRoot);
+  server.on("/data", handleData);
+
+  server.begin();
+
+  Serial.println("Web Server Started");
+}
+
+void loop() {
+  server.handleClient();
+}
