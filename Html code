@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyoTrack | EMG Monitoring</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>MyoTrack</h1>
+        <p>Measure the Muscle. Track the Recovery.</p>
+    </header>
+
+    <main class="dashboard">
+
+        <h2>Live EMG Monitoring Dashboard</h2>
+
+        <section class="data-card">
+            <h3>Raw EMG Value</h3>
+            <p id="rawValue">--</p>
+        </section>
+
+        <section class="data-card">
+            <h3>EMG Voltage</h3>
+            <p><span id="voltageValue">--</span> V</p>
+        </section>
+
+        <section class="data-card">
+            <h3>Connection Status</h3>
+            <p id="status">Connecting...</p>
+        </section>
+
+        <section class="data-card">
+            <h3>Live EMG Waveform</h3>
+            <canvas id="emgChart" width="600" height="220"></canvas>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Biomedical Engineering Project | MyoTrack</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
